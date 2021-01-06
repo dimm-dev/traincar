@@ -1,6 +1,6 @@
 import pygame
 
-BARRIER_SIZE = (16, 24)
+BARRIER_SIZE = (20, 30)
 
 class Barrier(pygame.sprite.Sprite):
     def __init__(self, pos):
