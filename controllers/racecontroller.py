@@ -15,5 +15,5 @@ class RaceController(object):
     def act(self, state):
         pass
 
-    def remember(self, state, action, reward, new_state):
+    def loopback(self, reward, new_state):
         pass

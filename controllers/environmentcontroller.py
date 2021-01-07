@@ -3,10 +3,8 @@ class EnvironemtController(object):
         super().__init__()
         self._barriers = barriers
         self._car = car
-        self._speed = [0, 0]
-        self._prev_speed = [0, 0]
-        self._bounce_border = False
-        self._bounce_barrier = False
+
+        self.restart()
 
     def snapshot(self):
         state = []
@@ -19,10 +17,11 @@ class EnvironemtController(object):
 
     def reward(self):
         value = 0
-        value += 1 if self._speed[1] > 0 else -1
-        value += 2 if self._speed[1] > self._prev_speed[1] else 0
+        value += 5 if self._speed[1] > 0 else -1
+        value += 7 if self._speed[1] > self._prev_speed[1] else 0
+        value += 2 if self._speed[0] != self._prev_speed[0] else 0
         value += -2 if self._bounce_border else 0
-        value += -16 if self._bounce_barrier else 0
+        value += -17 if self._bounce_barrier else 0
         return value
 
     def on_speed_update(self, speed):
@@ -38,3 +37,9 @@ class EnvironemtController(object):
         self._prev_speed = self._speed[:]
         self._bounce_barrier = False
         self._bounce_border = False
+
+    def restart(self):
+        self._speed = [0, 0]
+        self._prev_speed = [0, 0]
+        self._bounce_border = False
+        self._bounce_barrier = False

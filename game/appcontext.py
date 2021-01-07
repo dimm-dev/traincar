@@ -7,6 +7,7 @@ from controllers.barriercontroller import BarrierController
 from controllers.carcontroller import CarController
 from controllers.environmentcontroller import EnvironemtController
 from controllers.humancontroller import HumanController
+from controllers.dqncontroller import DQNController
 
 from utils.actions import translate_action
 
@@ -21,7 +22,7 @@ class AppContext(object):
         self._car_controller = CarController((TRACK_IMAGE_WIDTH / 2, TRACK_IMAGE_HEIGHT - self._car.rect.height), self._car)
         # TODO: all_sprites access via adapter object
         self._barrier_controller = BarrierController((TRACK_ROAD_LEFT, TRACK_ROAD_RIGHT, TRACK_IMAGE_HEIGHT), self._all_sprites)
-        self._game_controller = HumanController()
+        self._game_controller = DQNController() # HumanController()
         self._environment = EnvironemtController(self._barrier_controller.barriers, self._car)
 
         self._updates = [self._all_sprites.update, self._track.update, lambda : self._all_sprites.draw(self._screen), self._environment.update ]
@@ -36,6 +37,10 @@ class AppContext(object):
         self._do_updates()
 
         return cont
+
+    def restart(self):
+        for gem in [self._environment, self._car_controller, self._barrier_controller]:
+            gem.restart()
 
     def _dispatch_speed(self, speed):
         for endpoint in self.speed_update_delegate:
@@ -55,9 +60,10 @@ class AppContext(object):
         hits = pygame.sprite.spritecollide(self._car, self._barrier_controller.barriers, False)
         if hits:
             self._barrier_bounce()
-            return False
 
-        return True
+        self._game_controller.loopback(self._environment.reward(), self._environment)
+
+        return len(hits) == 0
 
     def _notify_impl(self, delegate):
         for endpoint in delegate:

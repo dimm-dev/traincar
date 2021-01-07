@@ -20,5 +20,5 @@ class HumanController(RaceController):
 
         return act
 
-    def loopback(self, state, action, reward, new_state):
+    def loopback(self, reward, new_state):
         pass

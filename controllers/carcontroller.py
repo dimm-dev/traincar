@@ -11,6 +11,7 @@ class CarController(object):
         super().__init__()
         self._car = car
         self._speed = [0, 0]
+        self._start_pos = start_pos[:]
         car.moveto(start_pos)
 
     def update(self, accel):
@@ -20,3 +21,7 @@ class CarController(object):
         self._speed[1] = speed[1]
         self._car.move(speed)
         return speed[0], speed[1]
+
+    def restart(self):
+        self._speed = [0, 0]
+        self._car.moveto(self._start_pos)
