@@ -9,10 +9,11 @@ class EnvironemtController(object):
         self._bounce_barrier = False
 
     def snapshot(self):
-        state = [].append(self._speed)
-        state.append([self._car.rect.x, self._car.rect.y])
+        state = []
+        state += self._speed
+        state += [self._car.rect.x, self._car.rect.y, self._car.rect.x + self._car.rect.width, self._car.rect.y + self._car.rect.height]
         for b in self._barriers:
-            state.append(b.rect.x, b.rect.y)
+            state += [b.rect.x, b.rect.y]
 
         return state
 
@@ -28,10 +29,10 @@ class EnvironemtController(object):
         self._speed = speed[:]
 
     def on_bounce_border(self):
-        pass
+        self._bounce_border = True
 
     def on_bounce_barrier(self):
-        pass
+        self._bounce_barrier = True
 
     def update(self):
         self._prev_speed = self._speed[:]

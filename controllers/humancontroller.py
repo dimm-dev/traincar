@@ -18,7 +18,7 @@ class HumanController(RaceController):
         if keystate[pygame.K_DOWN]:
             act |= Action.Slowdown
 
-        return act;
+        return act
 
     def loopback(self, state, action, reward, new_state):
         pass

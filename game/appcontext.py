@@ -24,9 +24,12 @@ class AppContext(object):
         self._game_controller = HumanController()
         self._environment = EnvironemtController(self._barrier_controller.barriers, self._car)
 
-        self._updates = [self._all_sprites.update, self._track.update, lambda : self._all_sprites.draw(self._screen) ]
+        self._updates = [self._all_sprites.update, self._track.update, lambda : self._all_sprites.draw(self._screen), self._environment.update ]
 
-        self.speed_update = [self._barrier_controller.update, self._environment.on_speed_update]
+        self._car.track_bounce_delegate.append(self._border_bounce)
+        self.speed_update_delegate = [self._barrier_controller.update, self._environment.on_speed_update]
+        self.border_bounce_delegate = [self._environment.on_bounce_border]
+        self.barrier_bounce_delegate = [self._environment.on_bounce_barrier]
 
     def update(self):
         cont = self._make_iteration()
@@ -35,12 +38,12 @@ class AppContext(object):
         return cont
 
     def _dispatch_speed(self, speed):
-        for update in self.speed_update:
-            update(speed)
+        for endpoint in self.speed_update_delegate:
+            endpoint(speed)
 
     def _do_updates(self):
-        for update in self._updates:
-            update()
+        for endpoint in self._updates:
+            endpoint()
 
     def _make_iteration(self):
         action = self._game_controller.act(self._environment)
@@ -50,5 +53,18 @@ class AppContext(object):
         self._dispatch_speed([speed_x, speed_y])
 
         hits = pygame.sprite.spritecollide(self._car, self._barrier_controller.barriers, False)
+        if hits:
+            self._barrier_bounce()
+            return False
 
-        return len(hits) == 0
+        return True
+
+    def _notify_impl(self, delegate):
+        for endpoint in delegate:
+            endpoint()
+
+    def _border_bounce(self):
+        self._notify_impl(self.border_bounce_delegate)
+
+    def _barrier_bounce(self):
+        self._notify_impl(self.barrier_bounce_delegate)
