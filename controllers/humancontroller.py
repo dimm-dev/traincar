@@ -10,15 +10,18 @@ class HumanController(RaceController):
 
         keystate = pygame.key.get_pressed()
         if keystate[pygame.K_LEFT]:
-            act |= Action.ShiftLeft
-        if keystate[pygame.K_RIGHT]:
-            act |= Action.ShiftRight
-        if keystate[pygame.K_UP]:
-            act |= Action.Accelerate
-        if keystate[pygame.K_DOWN]:
-            act |= Action.Slowdown
+            act = Action.ShiftLeft
+        elif keystate[pygame.K_RIGHT]:
+            act = Action.ShiftRight
+        elif keystate[pygame.K_UP]:
+            act = Action.Accelerate
+        elif keystate[pygame.K_DOWN]:
+            act = Action.Slowdown
 
         return act
 
     def loopback(self, reward, new_state):
+        pass
+
+    def restart(self):
         pass

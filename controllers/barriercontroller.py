@@ -1,8 +1,6 @@
 import random
 from sprites.barrier import Barrier, BARRIER_SIZE
 
-
-
 class BarrierController(object):
     def __init__(self, track_limits, sprites):
         self.barriers = []

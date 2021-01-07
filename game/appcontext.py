@@ -1,5 +1,8 @@
 import pygame
 
+from game.statuswidget import StatusWidget
+from game.trainwidget import TrainWidget
+
 from sprites.car import Car
 from sprites.track import Track, TRACK_IMAGE_WIDTH, TRACK_IMAGE_HEIGHT, TRACK_ROAD_LEFT, TRACK_ROAD_RIGHT
 
@@ -25,22 +28,43 @@ class AppContext(object):
         self._game_controller = DQNController() # HumanController()
         self._environment = EnvironemtController(self._barrier_controller.barriers, self._car)
 
-        self._updates = [self._all_sprites.update, self._track.update, lambda : self._all_sprites.draw(self._screen), self._environment.update ]
+        self._widget = StatusWidget(self._screen, pygame.Rect(5, 5, 150, 150))
+
+        self._updates = [self._all_sprites.update, self._track.update, self._widget.update, lambda : self._all_sprites.draw(self._screen), self._environment.update ]
 
         self._car.track_bounce_delegate.append(self._border_bounce)
-        self.speed_update_delegate = [self._barrier_controller.update, self._environment.on_speed_update]
-        self.border_bounce_delegate = [self._environment.on_bounce_border]
-        self.barrier_bounce_delegate = [self._environment.on_bounce_barrier]
+        self.speed_update_delegate = [self._barrier_controller.update, self._environment.on_speed_update, self._environment.on_speed_update, self._widget.on_speed_update]
+        self.border_bounce_delegate = [self._environment.on_bounce_border, self._widget.on_bounce_border]
+        self.barrier_bounce_delegate = [self._environment.on_bounce_barrier, self._widget.on_bounce_barrier]
+        self.action_delegate = [self._widget.on_action_update]
+        self.car_position_delegate = [self._widget.on_car_update]
+
+        self._update = self._real_update
 
     def update(self):
+        return self._update()
+
+    def restart(self):
+        self._update = self._notify_train
+        return True
+
+    def _notify_train(self):
+        w = TrainWidget(self._screen)
+        w.show()
+        self._update = self._restart_modules
+        return True
+
+    def _restart_modules(self):
+        self._update = self._real_update
+        for gem in [self._environment, self._car_controller, self._barrier_controller, self._game_controller]:
+            gem.restart()
+        return True
+
+    def _real_update(self):
         cont = self._make_iteration()
         self._do_updates()
 
         return cont
-
-    def restart(self):
-        for gem in [self._environment, self._car_controller, self._barrier_controller]:
-            gem.restart()
 
     def _dispatch_speed(self, speed):
         for endpoint in self.speed_update_delegate:
@@ -61,7 +85,10 @@ class AppContext(object):
         if hits:
             self._barrier_bounce()
 
-        self._game_controller.loopback(self._environment.reward(), self._environment)
+        reward = self._environment.reward()
+        self._dispatch_action(action, reward)
+        self._dispatch_car_position(self._car.rect)
+        self._game_controller.loopback(reward, self._environment)
 
         return len(hits) == 0
 
@@ -74,3 +101,11 @@ class AppContext(object):
 
     def _barrier_bounce(self):
         self._notify_impl(self.barrier_bounce_delegate)
+
+    def _dispatch_action(self, act, reward):
+        for endpoint in self.action_delegate:
+            endpoint(act, reward)
+
+    def _dispatch_car_position(self, rect):
+        for endpoint in self.car_position_delegate:
+            endpoint(rect)

@@ -19,7 +19,7 @@ def app_run():
             running = running and event.type != pygame.QUIT
 
         if running and not context.update():
-            context.restart()            
+            context.restart()
     
         pygame.display.flip()
 

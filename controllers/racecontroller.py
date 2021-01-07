@@ -3,10 +3,10 @@ from enum import IntFlag
 
 class Action(IntFlag):
     Nothing = 0,
-    Slowdown = 2,
-    Accelerate = 4,
-    ShiftLeft = 8,
-    ShiftRight = 16
+    Slowdown = 1,
+    Accelerate = 2,
+    ShiftLeft = 3,
+    ShiftRight = 4
 
 class RaceController(object):
     def __init__(self):
