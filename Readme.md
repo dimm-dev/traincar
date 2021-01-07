@@ -1,6 +1,6 @@
 # Car trainer
 
-It is research project for the reinforcement learning models based on car arcade game.
+It is a research project for the reinforcement learning models based on a car arcade game.
 
 ### Prerequisites
 
@@ -33,7 +33,9 @@ To run application you should:
 git clone https://github.com/dimm-dev/traincar.git
 ```
 3. Run application from the source directory:
-python \__main__.py
+```
+python __main__.py
+```
 
 TODO:
 - deb-packages    
