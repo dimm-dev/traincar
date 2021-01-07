@@ -17,9 +17,9 @@ class EnvironemtController(object):
 
     def reward(self):
         value = 0
-        value += 5 if self._speed[1] > 0 else -1
+        value += 3 if self._speed[1] > 0 else -1
         value += 7 if self._speed[1] > self._prev_speed[1] else 0
-        value += 2 if self._speed[0] != self._prev_speed[0] else 0
+        value += 5 if self._speed[0] != self._prev_speed[0] else 0
         value += -2 if self._bounce_border else 0
         value += -17 if self._bounce_barrier else 0
         return value

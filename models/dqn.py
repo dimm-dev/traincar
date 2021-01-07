@@ -23,9 +23,9 @@ class DQNAgent:
     def _build_model(self):
         # neural net to approximate Q-value function:
         model = Sequential()
-        model.add(Dense(32, activation='relu', 
+        model.add(Dense(512, activation='relu', 
                         input_dim=self.state_size)) # 1st hidden layer; states as input
-        model.add(Dense(32, activation='relu')) # 2nd hidden layer
+        model.add(Dense(512, activation='relu')) # 2nd hidden layer
         model.add(Dense(self.action_size, activation='linear')) # 2 actions, so 2 output neurons: 0 and 1 (L/R)
         model.compile(loss='mse',
                       optimizer=Adam(lr=self.learning_rate))
@@ -38,7 +38,7 @@ class DQNAgent:
     def train(self, batch_size): # method that trains NN with experiences sampled from memory
         minibatch = random.sample(self.memory, batch_size) # sample a minibatch from memory
         for state, action, reward, next_state, done in minibatch: # extract data for each minibatch sample
-            target = reward # if done (boolean whether game ended or not, i.e., whether final state or not), then target = reward
+            target = reward  # if done (boolean whether game ended or not, i.e., whether final state or not), then target = reward
             if not done: # if not done, then predict future discounted reward
                 target = (reward + 
                           self.gamma * # (target) = reward + (discount rate gamma) * 
