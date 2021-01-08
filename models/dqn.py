@@ -1,5 +1,5 @@
 # The implementaiont is based on "Deep Learning Illustrated (2020)" examples:
-# github.com/the-deep-learners/deep-learning-illustrated.git/notebooks/cartpole_dqn.ipynb
+# https://raw.githubusercontent.com/the-deep-learners/deep-learning-illustrated/master/notebooks/cartpole_dqn.ipynb
 
 import random
 import numpy as np
