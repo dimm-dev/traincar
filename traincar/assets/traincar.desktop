@@ -1,7 +1,7 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=Tran Car
+Name=Train Car
 Comment=Reinforcement Learning Train Car
 Exec=/usr/bin/traincar
 Icon=/usr/share/pixmaps/train-car.png

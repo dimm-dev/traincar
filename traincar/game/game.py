@@ -1,5 +1,5 @@
 import pygame
-from game.appcontext import AppContext
+from traincar.game.appcontext import AppContext
 
 FPS = 30
 

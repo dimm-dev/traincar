@@ -1,7 +1,7 @@
 from enum import Enum
 import pygame
 
-from controllers.racecontroller import Action
+from traincar.controllers.racecontroller import Action
 
 class Position(Enum):
     Left = 1

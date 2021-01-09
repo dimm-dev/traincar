@@ -11,6 +11,8 @@ setuptools.setup(
     long_description_content_type = "text/markdown",
     url = "https://github.com/dimm-dev/traincar",
     packages = setuptools.find_packages(),
+    package_dir = {'traincar' : 'traincar'},
+    package_data = {'' : ['assets/*']},
     classifiers = [
 	"Programming Language :: Python :: 3",
 	"License :: OSI Approved :: MIT License",
@@ -18,15 +20,13 @@ setuptools.setup(
     ],
     entry_points = {
 	    "console_scripts": [
-	        "traincar = traincar.__main__:script_run"
+	        "traincar=traincar.start:script_run"
         ]
     },
     requires = ['keras', 'pygame', 'setuptools'],
     install_requires=['keras', 'pygame'],
-    include_package_data = True,
     data_files = [
 	('share/applications/', ['traincar/assets/traincar.desktop']),
 	('share/pixmaps/', ['traincar/assets/train-car.png']),
-	('assets', ['traincar/assets/barrier.png', 'traincar/assets/car.png', 'traincar/assets/track.jpg'])
     ],
 )

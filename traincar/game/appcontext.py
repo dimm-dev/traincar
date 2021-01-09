@@ -1,18 +1,18 @@
 import pygame
 
-from game.statuswidget import StatusWidget
-from game.trainwidget import TrainWidget
+from traincar.game.statuswidget import StatusWidget
+from traincar.game.trainwidget import TrainWidget
 
-from sprites.car import Car
-from sprites.track import Track, TRACK_IMAGE_WIDTH, TRACK_IMAGE_HEIGHT, TRACK_ROAD_LEFT, TRACK_ROAD_RIGHT
+from traincar.sprites.car import Car
+from traincar.sprites.track import Track, TRACK_IMAGE_WIDTH, TRACK_IMAGE_HEIGHT, TRACK_ROAD_LEFT, TRACK_ROAD_RIGHT
 
-from controllers.barriercontroller import BarrierController
-from controllers.carcontroller import CarController
-from controllers.environmentcontroller import EnvironemtController
-from controllers.humancontroller import HumanController
-from controllers.dqncontroller import DQNController
+from traincar.controllers.barriercontroller import BarrierController
+from traincar.controllers.carcontroller import CarController
+from traincar.controllers.environmentcontroller import EnvironemtController
+from traincar.controllers.humancontroller import HumanController
+from traincar.controllers.dqncontroller import DQNController
 
-from utils.actions import translate_action
+from traincar.utils.actions import translate_action
 
 class AppContext(object):
     def __init__(self):

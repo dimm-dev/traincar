@@ -1,4 +1,4 @@
-from controllers.racecontroller import Action
+from traincar.controllers.racecontroller import Action
 
 def translate_action(action):
     accel_x = 0

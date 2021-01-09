@@ -1,5 +1,5 @@
 import pygame
-from controllers.racecontroller import Action, RaceController
+from traincar.controllers.racecontroller import Action, RaceController
 
 class HumanController(RaceController):
     def __init__(self):

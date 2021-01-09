@@ -1,8 +1,8 @@
 import random
 import numpy as np
-from controllers.racecontroller import Action, RaceController
-from models.dqn import DQNAgent
-from utils.arrays import list_to_nparray
+from traincar.controllers.racecontroller import Action, RaceController
+from traincar.models.dqn import DQNAgent
+from traincar.utils.arrays import list_to_nparray
 
 LEARN_COUNT = 1024
 TRAIN_COUNT = 512

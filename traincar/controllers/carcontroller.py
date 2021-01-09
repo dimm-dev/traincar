@@ -1,7 +1,7 @@
 import numpy as np
 
-from sprites.car import Car
-from utils.limits import normalize_range_limits, normalize_glide_limits
+from traincar.sprites.car import Car
+from traincar.utils.limits import normalize_range_limits, normalize_glide_limits
 
 SPEED_LIMITS = (0, 25)
 GLIDE_LIMITS = (0, 10)
