@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Tran Car
+Comment=Reinforcement Learning Train Car
+Exec=/usr/bin/traincar
+Icon=/usr/share/pixmaps/train-car.png
+Categories=Game;
+Terminal=false
+StartupNotify=true
+StartupWMClass=train-car
