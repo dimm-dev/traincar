@@ -16,22 +16,17 @@ setuptools.setup(
 	"License :: OSI Approved :: MIT License",
 	"Operating System :: OS Independent"
     ],
-    entry_points={
-	"console_scripts": [
-	    "traincar = traincar.__main__:main"
+    entry_points = {
+	    "console_scripts": [
+	        "traincar = traincar.__main__:script_run"
         ]
     },
-    requires = ['torch', 'pygame', 'setuptools'],
-    install_requires=['torch', 'pygame'],
-    package_data = {'': [
-        'assets/barrier.png',
-        'assets/car.png',
-        'assets/track.jpg'
-        ]
-    },
+    requires = ['keras', 'pygame', 'setuptools'],
+    install_requires=['keras', 'pygame'],
     include_package_data = True,
     data_files = [
-        ('share/applications/', ['traincar/assets/traincar.desktop']),
-        ('share/pixmaps/', ['traincar/assets/train-car.png'])
+	('share/applications/', ['traincar/assets/traincar.desktop']),
+	('share/pixmaps/', ['traincar/assets/train-car.png']),
+	('assets', ['traincar/assets/barrier.png', 'traincar/assets/car.png', 'traincar/assets/track.jpg'])
     ],
 )
